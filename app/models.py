@@ -18,22 +18,6 @@ class Users(db.Model):
         self.text = text
         self.description = description
 
-    def delete(self, resource):
-        db.session.delete(resource)
-        return db.session.commit()
-
-    def update(self):
-        return db.session.commit()
-
-class UsersSchema(Schema):
-    not_blank = validate.Length(min=1, error='Field cannot be blank')
-    # add validate=not_blank in required fields
-    id_str = fields.String(dump_only=True)
-    name = fields.String(validate=not_blank)
-    created = fields.LocalDateTime(validate=not_blank)
-    text = fields.String(required=True)
-
-
 # self links
 def get_top_level_links(self, data, many):
     if many:
@@ -41,6 +25,3 @@ def get_top_level_links(self, data, many):
     else:
         self_link = "/users/{}".format(data['id_str'])
         return {'self': self_link}
- #The below type object is a resource identifier object as per http://jsonapi.org/format/#document-resource-identifier-objects
- class Meta:
-     type_ = 'users'

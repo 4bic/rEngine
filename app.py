@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
+from rEngine import config , models
+
 # from flask.ext.heroku import Heroku
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://twitterr:twitterr@localhost/REngine_dev"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URL
 
 # heroku = Heroku(app)
 db = SQLAlchemy(app)

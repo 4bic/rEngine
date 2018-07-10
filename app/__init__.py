@@ -1,15 +1,18 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
-from rEngine import config #,models
+# local imports
+import config
+from config import app_config
+# import models
 
-# from flask.ext.heroku import Heroku
+# from models import User, Results
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URL
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# heroku = Heroku(app)
 db = SQLAlchemy(app)
 
 # Create our database model
@@ -44,8 +47,10 @@ class Results(db.Model):
 # Set "homepage" to index.html
 @app.route('/')
 
+# def index():
+#     return render_template('index.html')
 def index():
-    return render_template('index.html')
+    return render_template('wordy.html')
 
 # Save name & e-mail to database and send to success page
 @app.route('/prereg', methods=['POST'])

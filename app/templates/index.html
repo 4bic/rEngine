@@ -29,8 +29,8 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="#">Home</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li class="dropdown">
+          <li><a href="keywords">Analyze keywords</a></li>
+          <!-- <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="#">Action</a></li>
@@ -41,7 +41,7 @@
               <li><a href="#">Separated link</a></li>
               <li><a href="#">One more separated link</a></li>
             </ul>
-          </li>
+          </li> -->
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -54,18 +54,17 @@
             <div class="col-lg-12 text-center v-center">
                 <h1>Welcome to rEngine Insights</h1>
                 <p class="lead"> Please enter Your name and email to get started</p>
-                <br>
-                <br>
-                <br>
+                <br><br><br>
                 <form class="col-lg-12" action="{{url_for('prereg')}}" method="POST">
-                    <div class="input-group" style="width:340px;margin:0 auto;">
-                        <input class="form-control input-lg" style="text-align:center" title="Don't worry. We Too hate spam, and will not share your email with anyone." placeholder="Please Enter your Name" type="text" name="name">
+                    <div class="input-group" style="width:340px;margin:0 auto; text-align:center;">
+                        <input class="form-control input-lg" title="We will not share your name with anyone." placeholder="Please Enter your Name" type="text" name="name">
+                        <br><br>
                         <input class="form-control input-lg" title="Don't worry. We hate spam, and will not share your email with anyone." placeholder="Enter your email address" type="email" name="email">
-                        <span class="input-group-btn"><button class="btn btn-lg btn-primary" type="submit">GO</button></span>
+                        <br><br>
+                        <button class="btn btn-lg btn-primary" type="submit">Submit</button>
                     </div>
                 </form>
             </div>
-
         </div>
         <!-- /row -->
 

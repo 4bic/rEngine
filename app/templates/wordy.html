@@ -1,30 +1,53 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Wordcount</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style>
-      .container {
-        max-width: 1000px;
-      }
-    </style>
-  </head>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>rEngine</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+
   <body>
-    <div class="container">
-      <h1>Wordcount 3000</h1>
-      <form role="form" method='POST' action='/'>
-        <div class="form-group">
-          <input type="text" name="url" class="form-control" id="url-box" placeholder="Enter URL..." style="max-width: 300px;" autofocus required>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
-      <br>
-      {% for error in errors %}
-        <h4>{{ error }}</h4>
-      {% endfor %}
-    </div>
+      <div class="container-full">
+          <div class="row">
+              <div class="col-lg-12 text-center v-center">
+                  <h1>Welcome to rEngine Insights</h1>
+                  <p class="lead">Enter the key Search words to receive analysis from TXXX</p>
+                  <br>
+                  <br>
+                  <br>
+              </div>
+              <div class="container ">
+                <h1>Search terms analysis</h1>
+                <form role="form" action="{{url_for('upload_words')}}" method="POST">
+                  <div class="form-group">
+                    <input type="text" name="search_term" class="form-control" placeholder="Enter terms to Analyze " style="max-width: 300px;" autofocus required>
+                  </div>
+                  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                </form>
+
+                <br>
+                {% for error in errors %}
+                  <h4>{{ error }}</h4>
+                {% endfor %}
+              </div>
+              ##
+          </div>
+      </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
   </body>
 </html>

@@ -14,7 +14,6 @@
     <![endif]-->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
-<<<<<<< HEAD
     <body>
         <div class="container-full">
 
@@ -24,24 +23,33 @@
                     <p class="lead">Enter the Search Keywords to carry out an analysis on</p><br><br><br>
                 </div>
             <div class="row">
-                <div class="col-lg-4 text-left ">
-                    <h1>Key word(s) search</h1><br><br>
+                <div class="col-lg-4 text-left form-group has-success has-feedback ">
+                    <h1>Key word(s) search</h1><br>
                         <form role="form" action="{{url_for('word_search')}}" method="POST", name="search_term">
                             <div class="form-group">
-                                <input type="text" name="search_term" class="form-control" placeholder="Enter terms to Analyze " style="max-width: 300px;" autofocus required>
+                                <input type="text" name="search_term" class="form-control" placeholder="Enter terms to Analyze " style="max-width: 300px;" autofocus required id="inputSuccess2" aria-describedby="inputSuccess2Status">
                             </div>
                             <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-                        </for><br>
+                        </form><br>
                         {% for error in errors %}
                             <h4>{{ error }}</h4>
                         {% endfor %}
                 </div>
                 <div class=" col-lg-8 text-center">
                     <h2>Results on uploaded Keywords</h2>
-                    <table >
-                            <th>User Name</th><th> Tweet Text </th><th>User Location</th>
+                    <table class="table table-bordered table-hover">
+                        <th>User Name</th>
+                        <th>Tweet Text</th>
+                        <th>User Location</th>
                         <tr>
-                            <td>user_name | text | user_location </td>
+                            <td>user_name</td>
+                            <td>text</td>
+                            <td>user_location </td>
+                        </tr>
+                        <tr>
+                            <td>user_name2</td>
+                            <td>text2</td>
+                            <td>user_location2</td>
                         </tr>
                     </table>
                 </div>
@@ -60,42 +68,4 @@
 
 
     </body>
-=======
-
-  <body>
-      <div class="container-full">
-          <div class="row">
-              <div class="col-lg-12 text-center v-center">
-                  <h1>Welcome to rEngine Insights</h1>
-                  <p class="lead">Enter the key Search words to receive analysis from TXXX</p>
-                  <br>
-                  <br>
-                  <br>
-              </div>
-              <div class="container ">
-                <h1>Search terms analysis</h1>
-                <form role="form" action="{{url_for('upload_words')}}" method="POST">
-                  <div class="form-group">
-                    <input type="text" name="search_term" class="form-control" placeholder="Enter terms to Analyze " style="max-width: 300px;" autofocus required>
-                  </div>
-                  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-                </form>
-
-                <br>
-                {% for error in errors %}
-                  <h4>{{ error }}</h4>
-                {% endfor %}
-              </div>
-              ##
-          </div>
-      </div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-
-  </body>
->>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
 </html>

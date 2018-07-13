@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_table import Table, Col
+import psycopg2
 
 # local imports
 import config
 from config import app_config
-# import models
-
-# from models import User, Results
+# import models , routes
 
 app = Flask(__name__)
 
@@ -27,30 +27,29 @@ class User(db.Model):
         self.email = email
 
     def __repr__(self):
-        return '<E-mail %r>' % self.email
+        return '<User {}>'.format(self.username)
 
-class Results(db.Model):
+class Keyword(db.Model):
     __tablename__ = "keywords"
-    id = db.Column(db.Integer(),primary_key=True)
-    user_name = db.Column(db.String())
-    text = db.Column(db.String())
-    user_created = db.Column(db.String())
+    id = db.Column(db.Integer, primary_key=True)
+    search_term = db.Column(db.String, nullable=False)
 
-    def __init__(self, name,text,created):
-        self.name = user_name
-        self.text = text
-        self.created = user_created
+    def __init__(self, search_term):
+        self.search_term = search_term
 
     def __repr__(self):
-        return '<E-mail %r>' % self.email
+        return '<search_term {}'.format(self.name)
+
+class Results(Table):
+    text = Col('text', show=False)
+    user_name = Col('user_name')
+    user_location = Col('user_location')
 
 # Set "homepage" to index.html
 @app.route('/')
 
-# def index():
-#     return render_template('index.html')
 def index():
-    return render_template('wordy.html')
+    return render_template('index.html')
 
 # Save name & e-mail to database and send to success page
 @app.route('/prereg', methods=['POST'])
@@ -67,6 +66,28 @@ def prereg():
             db.session.commit()
             return render_template('success.html')
     return render_template('index.html')
+
+# @app.route('/keywords')
+# def word_entry():
+#     return render_template('wordy.html')
+
+@app.route('/word_search', methods=['Get','POST'])
+def word_search():
+    search_term = None
+    if request.method == 'POST':
+        search_term = request.form['search_term']
+        if not db.session.query(Keyword).filter(Keyword.search_term == search_term).count():
+            reg = Keyword(search_term)
+            db.session.add(reg)
+            db.session.commit()
+        # return render_template('results.html')
+    return render_template('wordy.html')
+
+@app.route('/results',)
+def search_results():
+    results = Keyword.query.all()
+
+    return render_template('results.html', results=results)
 
 if __name__ == '__main__':
     #app.debug = True

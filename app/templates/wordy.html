@@ -14,6 +14,7 @@
     <![endif]-->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
+<<<<<<< HEAD
     <body>
         <div class="container-full">
 
@@ -59,4 +60,42 @@
 
 
     </body>
+=======
+
+  <body>
+      <div class="container-full">
+          <div class="row">
+              <div class="col-lg-12 text-center v-center">
+                  <h1>Welcome to rEngine Insights</h1>
+                  <p class="lead">Enter the key Search words to receive analysis from TXXX</p>
+                  <br>
+                  <br>
+                  <br>
+              </div>
+              <div class="container ">
+                <h1>Search terms analysis</h1>
+                <form role="form" action="{{url_for('upload_words')}}" method="POST">
+                  <div class="form-group">
+                    <input type="text" name="search_term" class="form-control" placeholder="Enter terms to Analyze " style="max-width: 300px;" autofocus required>
+                  </div>
+                  <button type="submit" class="btn btn-lg btn-primary">Submit</button>
+                </form>
+
+                <br>
+                {% for error in errors %}
+                  <h4>{{ error }}</h4>
+                {% endfor %}
+              </div>
+              ##
+          </div>
+      </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="//code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+  </body>
+>>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
 </html>

@@ -28,14 +28,8 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
-<<<<<<< HEAD
 
 class Keyword(db.Model):
-=======
-
-class Keyword(db.Model):
-
->>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
     __tablename__ = "keywords"
     id = db.Column(db.Integer, primary_key=True)
     search_term = db.Column(db.String, nullable=False)
@@ -45,14 +39,11 @@ class Keyword(db.Model):
 
     def __repr__(self):
         return '<search_term {}'.format(self.name)
-<<<<<<< HEAD
 
 class Results(Table):
     text = Col('text', show=False)
     user_name = Col('user_name')
     user_location = Col('user_location')
-=======
->>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
 
 # Set "homepage" to index.html
 @app.route('/')
@@ -76,21 +67,12 @@ def prereg():
             return render_template('success.html')
     return render_template('index.html')
 
-<<<<<<< HEAD
 # @app.route('/keywords')
 # def word_entry():
 #     return render_template('wordy.html')
 
 @app.route('/word_search', methods=['Get','POST'])
 def word_search():
-=======
-@app.route('/keywords')
-def word_entry():
-    return render_template('wordy.html')
-
-@app.route('/upload_words', methods=['POST'])
-def upload_words():
->>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
     search_term = None
     if request.method == 'POST':
         search_term = request.form['search_term']
@@ -98,7 +80,6 @@ def upload_words():
             reg = Keyword(search_term)
             db.session.add(reg)
             db.session.commit()
-<<<<<<< HEAD
         # return render_template('results.html')
     return render_template('wordy.html')
 
@@ -108,10 +89,6 @@ def search_results():
 
     return render_template('results.html', results=results)
 
-=======
-    return render_template('wordy.html')
-
->>>>>>> a230a5b01b5bf2180384e89daa1d81051fe838f4
 if __name__ == '__main__':
     #app.debug = True
     app.run()

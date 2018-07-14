@@ -6,7 +6,6 @@ import psycopg2
 # local imports
 import config
 from config import app_config
-# import models , routes
 
 app = Flask(__name__)
 
@@ -40,14 +39,20 @@ class Keyword(db.Model):
     def __repr__(self):
         return '<search_term {}'.format(self.name)
 
-class Results(Table):
-    text = Col('text', show=False)
-    user_name = Col('user_name')
-    user_location = Col('user_location')
+class Results(db.Model):
+    __tablename__ = "tweets_stream"
+    id_str = db.Column(db.String, primary_key=True)
+    user_name = db.Column(db.String())
+    text = db.Column(db.String())
+    user_location = db.Column(db.String(120))
+
+    def __init__(self, user_name,text,user_location):
+        self.user_name = user_name
+        self.text = text
+        self.user_location = user_location
 
 # Set "homepage" to index.html
 @app.route('/')
-
 def index():
     return render_template('index.html')
 
@@ -67,11 +72,11 @@ def prereg():
             return render_template('success.html')
     return render_template('index.html')
 
-# @app.route('/keywords')
-# def word_entry():
-#     return render_template('wordy.html')
+@app.route('/keywords')
+def word_entry():
+    return render_template('new.html')
 
-@app.route('/word_search', methods=['Get','POST'])
+@app.route('/word_search', methods=['GET','POST'])
 def word_search():
     search_term = None
     if request.method == 'POST':
@@ -80,14 +85,21 @@ def word_search():
             reg = Keyword(search_term)
             db.session.add(reg)
             db.session.commit()
+            # flash("Your keyword(s) have been uploaded")
         # return render_template('results.html')
     return render_template('wordy.html')
 
-@app.route('/results',)
-def search_results():
-    results = Keyword.query.all()
+# @app.route('/results',methods=['GET'])
+# def display_results():
+#     results = None
+#     if request.method == 'GET':
+#         results = Results.query.all()
+#     return render_template('results.html',results=results)
 
-    return render_template('results.html', results=results)
+@app.route('/results/<int:page_num>')
+def tweet_result(page_num):
+    tweets = Results.query.paginate(per_page=6,page=page_num,error_out=True)
+    return render_template('results.html',tweets=tweets)
 
 if __name__ == '__main__':
     #app.debug = True

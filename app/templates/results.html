@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Analytics results</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-full">
+        <div class="container col-lg-8 ">
+            <h1>Tweets on uploaded Keywords</h1>
+            <table class="table table-bordered table-hover " id="results">
+                <th>User Name</th>
+                <th>Tweet Text</th>
+                <th>User Location</th>
+                {% for tweet in tweets.items %}
+                <tr>
+                    <td>{{ tweet.user_name }}</td>
+                    <td>{{ tweet.text }}</td>
+                    <td>{{ tweet.user_location }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% for page in tweets.iter_pages() %}
+            {% if page %}
+            <a href="{{ url_for ('tweet_result', page_num=page) }}">{{ page }}</a>
+            {% else %}
+            ...
+            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+} );
+</body>
+</html>

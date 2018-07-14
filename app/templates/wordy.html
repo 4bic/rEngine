@@ -37,20 +37,17 @@
                 </div>
                 <div class=" col-lg-8 text-center">
                     <h2>Results on uploaded Keywords</h2>
-                    <table class="table table-bordered table-hover">
+                        <table class="table table-bordered table-hover ">
                         <th>User Name</th>
                         <th>Tweet Text</th>
                         <th>User Location</th>
-                        <tr>
-                            <td>user_name</td>
-                            <td>text</td>
-                            <td>user_location </td>
-                        </tr>
-                        <tr>
-                            <td>user_name2</td>
-                            <td>text2</td>
-                            <td>user_location2</td>
-                        </tr>
+                        {% for item in results %}
+                            <tr>
+                                <td>{{ item.user_name }}</td>
+                                <td>{{ item.text }}</td>
+                                <td>{{ item.user_location }}</td>
+                            </tr>
+                        {% endfor %}
                     </table>
                 </div>
             </div>

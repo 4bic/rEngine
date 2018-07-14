@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
+    {% block head %}
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <title>rEngine</title>
+    <title>{% block title %} {% endblock %} rEngine</title>
     <meta name="generator" content="Bootply" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,6 +14,7 @@
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    {% endblock %}
 </head>
 <!-- Fixed navbar -->
   <div class="navbar navbar-default navbar-fixed-top">
@@ -73,12 +75,7 @@
                 <a href="#"><i class="icon-google-plus"></i></a>  <a href="#"><i class="icon-facebook"></i></a>  <a href="#"><i class="icon-twitter"></i></a>  <a href="#"><i class="icon-github"></i></a>  <a href="#"><i class="icon-pinterest"></i></a>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </div>
+        <br><br><br><br><br>
     <!-- /container full -->
 
     <!-- <div class="container">
@@ -111,18 +108,16 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+
+
+        <div class="footer col-lg-12">
+                {% block footer %}
+                <p class="pull-right"><a href=#>NA data</a> &nbsp; ©Copyright 2018<sup>TM</sup> Brand.</p>
+                {% endblock %}
         </div>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <br>
-                <br>
-                <p class="pull-right"><a href=#>NA data</a> &nbsp; ©Copyright 2018<sup>TM</sup> Brand.</p>
-                <br>
-                <br>
-            </div>
-        </div>
-    </div> -->
+    </div>
 
     <!-- script references -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

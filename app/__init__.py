@@ -40,16 +40,18 @@ class Keyword(db.Model):
         return '<search_term {}'.format(self.name)
 
 class Results(db.Model):
-    __tablename__ = "tweets_stream"
-    id_str = db.Column(db.String, primary_key=True)
-    user_name = db.Column(db.String())
-    text = db.Column(db.String())
-    user_location = db.Column(db.String(120))
+    __tablename__ = "classified_tweets"
+    row_names = db.Column(db.String, primary_key=True)
+    user_handle = db.Column(db.String())
+    tweet = db.Column(db.String())
+    time = db.Column(db.String())
+    topic = db.Column(db.String(120))
 
-    def __init__(self, user_name,text,user_location):
-        self.user_name = user_name
-        self.text = text
-        self.user_location = user_location
+    def __init__(self, time,user_handle,tweet,topic):
+        self.time = time
+        self.user_handle = user_handle
+        self.tweet = tweet
+        self.topic = topic
 
 # Set "homepage" to index.html
 @app.route('/')

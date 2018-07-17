@@ -16,14 +16,16 @@
         <div class="container col-lg-8 ">
             <h1>Tweets on uploaded Keywords</h1>
             <table class="table table-bordered table-hover " id="results">
-                <th>User Name</th>
+                <th>Time </th>
+                <th>User Handle</th>
                 <th>Tweet Text</th>
-                <th>User Location</th>
+                <th>topic</th>
                 {% for tweet in tweets.items %}
                 <tr>
-                    <td>{{ tweet.user_name }}</td>
-                    <td>{{ tweet.text }}</td>
-                    <td>{{ tweet.user_location }}</td>
+                    <td>{{ tweet.time }}</td>
+                    <td>{{ tweet.user_handle }}</td>
+                    <td>{{ tweet.tweet }}</td>
+                    <td>{{ tweet.topic }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -37,6 +39,5 @@
             {% endfor %}
         </div>
     </div>
-} );
 </body>
 </html>

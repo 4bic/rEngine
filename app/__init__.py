@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_table import Table, Col
 import psycopg2
@@ -7,8 +7,8 @@ import psycopg2
 import config
 from config import app_config
 
-app = Flask(__name__)
 
+app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -39,22 +39,37 @@ class Keyword(db.Model):
     def __repr__(self):
         return '<search_term {}'.format(self.name)
 
+# class Results(db.Model):
+#     __tablename__ = "tweets_stream"
+#     id_str = db.Column(db.String, primary_key=True)
+#     user_name = db.Column(db.String())
+#     text = db.Column(db.String())
+#     user_location= db.Column(db.String(120))
+#
+#     def __init__(self,user_name,tweet,user_location):
+#         self.user_name = user_name
+#         self.text = text
+#         self.user_location = user_location
+
 class Results(db.Model):
     __tablename__ = "classified_tweets"
-    row_names = db.Column(db.String, primary_key=True)
-    user_handle = db.Column(db.String())
-    tweet = db.Column(db.String())
-    time = db.Column(db.String())
-    topic = db.Column(db.String(120))
+    id_str = db.Column(db.Integer, primary_key=True)
+    user= db.Column(db.String())
+    text = db.Column(db.String())
+    predictions = db.Column(db.String())
 
-    def __init__(self, time,user_handle,tweet,topic):
-        self.time = time
-        self.user_handle = user_handle
-        self.tweet = tweet
-        self.topic = topic
+    def __init__(self,user,text,predictions):
+        self.user = user
+        self.text = text
+        self.predictions = predictions
+
+# landing page
+@app.route('/')
+def landing():
+    return render_template('base.html')
 
 # Set "homepage" to index.html
-@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html')
 
@@ -81,15 +96,16 @@ def word_entry():
 @app.route('/word_search', methods=['GET','POST'])
 def word_search():
     search_term = None
+    # tweets = Results.query.all()
+    tweets = Results.query.paginate(per_page=6,error_out=True)
     if request.method == 'POST':
         search_term = request.form['search_term']
         if not db.session.query(Keyword).filter(Keyword.search_term == search_term).count():
             reg = Keyword(search_term)
             db.session.add(reg)
             db.session.commit()
-            # flash("Your keyword(s) have been uploaded")
-        # return render_template('results.html')
-    return render_template('wordy.html')
+        return redirect(url_for('word_search'))
+    return render_template('wordy.html',tweets=tweets)
 
 # @app.route('/results',methods=['GET'])
 # def display_results():
@@ -102,6 +118,14 @@ def word_search():
 def tweet_result(page_num):
     tweets = Results.query.paginate(per_page=6,page=page_num,error_out=True)
     return render_template('results.html',tweets=tweets)
+
+
+@app.route('/basic')
+def basic_page():
+    # tweets = Results.query.all()
+    tweets = Results.query.filter(Results.predictions =='fashion').all()
+    return render_template('basic.html',tweets=tweets)
+
 
 if __name__ == '__main__':
     #app.debug = True

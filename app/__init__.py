@@ -1,25 +1,64 @@
 from flask import Flask, render_template, request, jsonify, session, redirect, url_for, json
-from flask_table import Table, Col
+from flask_sqlalchemy import SQLAlchemy
+
 import psycopg2
 import os
 
 # local imports
 import config
 from config import app_config
-from .models import *
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
+db = SQLAlchemy(app)
+
+# Create our database model
+class User(db.Model):
+    __tablename__ = "users"
+    user_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    email = db.Column(db.String(120), unique=True)
+
+    def __init__(self, name,email):
+        self.name = name
+        self.email = email
+
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+
+class Keyword(db.Model):
+    __tablename__ = "keywords"
+    id = db.Column(db.Integer, primary_key=True)
+    search_term = db.Column(db.String, nullable=False)
+
+    def __init__(self, search_term):
+        self.search_term = search_term
+
+    def __repr__(self):
+        return '<search_term {}'.format(self.name)
+
+class Results(db.Model):
+    __tablename__ = "classified_tweets"
+    id_str = db.Column(db.Integer, primary_key=True)
+    user= db.Column(db.String())
+    text = db.Column(db.String())
+    predictions = db.Column(db.String())
+
+    def __init__(self,user,text,predictions):
+        self.user = user
+        self.text = text
+        self.predictions = predictions
+
 # # landing page
-# @app.route('/')
-# def landing():
-#     return render_template('base.html')
+@app.route('/')
+def landing():
+    return render_template('base.html')
 
 # Set "homepage" to index.html
-@app.route('/')
+@app.route('/home')
 def index():
     return render_template('index.html')
 
